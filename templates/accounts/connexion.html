@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Connexion · e-Constat{% endblock %}
+{% block conteneur_classe %}conteneur-etroit{% endblock %}
+{% block content %}
+<div class="carte">
+    <h2>Se connecter</h2>
+    <form method="post">
+        {% csrf_token %}
+        {% include 'partials/form.fields.html' %}
+        <button type="submit" class="btn btn-a btn-plein">Se connecter</button>
+    </form>
+    <p class="pied-carte">Pas encore de compte ? <a href="{% url 'inscription' %}">Créer un compte</a></p>
+</div>
+{% endblock %}

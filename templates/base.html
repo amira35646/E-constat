@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}e-Constat{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a class="logo" href="{% url 'home' %}">
+                <span class="logo-marque" aria-hidden="true"><i></i><i></i></span>
+                e-Constat
+            </a>
+            <nav class="nav">
+                {% if user.is_authenticated %}
+                    <span class="utilisateur">{{ user.get_full_name|default:user.username }}</span>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-lien">Se déconnecter</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}">Se connecter</a>
+                    <a class="btn btn-a" href="{% url 'inscription' %}">Créer un compte</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <main class="conteneur {% block conteneur_classe %}{% endblock %}">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

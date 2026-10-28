@@ -1,0 +1,206 @@
+:root {
+  --fond: #f3f4f1;
+  --surface: #ffffff;
+  --texte: #1c2733;
+  --texte-doux: #5b6672;
+  --ligne: #d9dde2;
+  --bleu-a: #1f5fbf;
+  --bleu-a-fonce: #174a96;
+  --ambre-b: #f0b429;
+  --ambre-b-fonce: #d99a0b;
+  --danger: #b3261e;
+  --ok: #1f7a4d;
+  --rayon: 10px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--fond);
+  color: var(--texte);
+  font-family: "Atkinson Hyperlegible", system-ui, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  font-family: "Bricolage Grotesque", "Atkinson Hyperlegible", sans-serif;
+  line-height: 1.15;
+  margin: 0 0 .5em;
+}
+h1 { font-size: clamp(2rem, 5vw, 3.25rem); font-weight: 700; letter-spacing: -0.02em; }
+h2 { font-size: 1.5rem; font-weight: 600; }
+p  { max-width: 62ch; margin: 0 0 1em; }
+a  { color: var(--bleu-a); }
+
+:focus-visible { outline: 3px solid var(--bleu-a); outline-offset: 2px; }
+
+/* ---------- Barre de navigation ---------- */
+.topbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--ligne);
+}
+.topbar-inner {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.logo {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--texte);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+/* Petit repère A/B : deux carrés bleu et ambre */
+.logo-marque { display: inline-flex; }
+.logo-marque i { width: 14px; height: 22px; display: block; }
+.logo-marque i:first-child { background: var(--bleu-a); border-radius: 4px 0 0 4px; }
+.logo-marque i:last-child  { background: var(--ambre-b); border-radius: 0 4px 4px 0; }
+
+.nav { display: flex; align-items: center; gap: 18px; }
+.nav a { color: var(--texte); text-decoration: none; font-weight: 600; }
+.nav a:hover { color: var(--bleu-a); }
+.nav .utilisateur { color: var(--texte-doux); }
+.nav form { margin: 0; }
+
+/* ---------- Mise en page ---------- */
+.conteneur { max-width: 1040px; margin: 0 auto; padding: 40px 20px 64px; }
+.conteneur-etroit { max-width: 580px; }
+
+/* ---------- Boutons ---------- */
+.btn {
+  display: inline-block;
+  padding: 12px 22px;
+  border: 2px solid transparent;
+  border-radius: var(--rayon);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+}
+.btn-a { background: var(--bleu-a); color: #fff; }
+.btn-a:hover { background: var(--bleu-a-fonce); }
+.btn-b { background: var(--ambre-b); color: #1c2733; }
+.btn-b:hover { background: var(--ambre-b-fonce); }
+.btn-lien {
+  background: none; border: 0; padding: 0;
+  color: var(--texte); font: inherit; font-weight: 600; cursor: pointer;
+}
+.btn-lien:hover { color: var(--danger); }
+.btn-plein { width: 100%; }
+
+/* ---------- Accueil ---------- */
+.hero { padding: 24px 0 36px; }
+.hero p { font-size: 1.2rem; color: var(--texte-doux); }
+
+.duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.volet {
+  background: var(--surface);
+  border: 1px solid var(--ligne);
+  border-radius: var(--rayon);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+.volet::before {            /* bande de couleur à gauche */
+  content: "";
+  position: absolute; inset: 0 auto 0 0;
+  width: 10px;
+}
+.volet-a::before { background: var(--bleu-a); }
+.volet-b::before { background: var(--ambre-b); }
+.volet-lettre {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 4rem; font-weight: 800; line-height: 1;
+}
+.volet-a .volet-lettre { color: var(--bleu-a); }
+.volet-b .volet-lettre { color: var(--ambre-b-fonce); }
+.volet p { color: var(--texte-doux); margin-bottom: 12px; }
+.volet .btn, .volet form { margin-top: auto; }
+
+.rejoindre { display: flex; gap: 10px; }
+.rejoindre input { flex: 1; min-width: 0; text-transform: uppercase; letter-spacing: .12em; }
+
+/* ---------- Formulaires ---------- */
+.carte {
+  background: var(--surface);
+  border: 1px solid var(--ligne);
+  border-radius: var(--rayon);
+  padding: 32px;
+}
+.field { margin-bottom: 18px; }
+.field label { display: block; font-weight: 700; margin-bottom: 6px; }
+.field input, .field select, .field textarea, .rejoindre input {
+  width: 100%;
+  padding: 11px 13px;
+  font: inherit;
+  color: var(--texte);
+  background: #fff;
+  border: 2px solid var(--ligne);
+  border-radius: 8px;
+}
+.field input:focus, .field select:focus, .field textarea:focus, .rejoindre input:focus {
+  border-color: var(--bleu-a);
+  outline: none;
+}
+.field small { display: block; color: var(--texte-doux); font-size: .9rem; margin-top: 4px; }
+.field small ul { margin: 4px 0 0; padding-left: 18px; }
+.erreur { color: var(--danger); font-weight: 700; font-size: .95rem; margin: 6px 0 0; }
+.pied-carte { margin: 20px 0 0; color: var(--texte-doux); }
+
+/* ---------- Messages ---------- */
+.messages { list-style: none; margin: 0 0 24px; padding: 0; }
+.messages li {
+  padding: 12px 16px;
+  border-radius: 8px;
+  border-left: 6px solid var(--bleu-a);
+  background: #e8f0fb;
+}
+.messages li.error   { border-color: var(--danger); background: #fbe9e7; }
+.messages li.success { border-color: var(--ok); background: #e5f4ec; }
+
+/* ---------- Mobile ---------- */
+@media (max-width: 720px) {
+  .duo { grid-template-columns: 1fr; }
+  .conteneur { padding-top: 24px; }
+  .carte { padding: 22px; }
+}
+
+/* ---------- Formulaire d'inscription ---------- */
+.carte .intro { color: var(--texte-doux); margin-bottom: 24px; }
+
+.ligne-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 16px;
+}
+
+.field.a-erreur input,
+.field.a-erreur select,
+.field.a-erreur textarea { border-color: var(--danger); }
+
+input::placeholder { color: #9aa3ad; }
+
+.carte button[type="submit"] { margin-top: 8px; font-size: 1.05rem; }
+
+@media (max-width: 560px) {
+  .ligne-2 { grid-template-columns: 1fr; }
+}

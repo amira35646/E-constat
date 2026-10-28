@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Inscription · e-Constat{% endblock %}
+{% block conteneur_classe %}conteneur-etroit{% endblock %}
+{% block content %}
+<div class="carte">
+    <h2>Créer votre compte</h2>
+    <p class="intro">Quelques informations suffisent pour remplir votre constat plus vite.</p>
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+
+        {% for erreur in form.non_field_errors %}
+            <p class="erreur">{{ erreur }}</p>
+        {% endfor %}
+
+        <div class="ligne-2">
+            {% include 'partials/champ.html' with field=form.first_name %}
+            {% include 'partials/champ.html' with field=form.last_name %}
+        </div>
+
+        {% include 'partials/champ.html' with field=form.username %}
+        {% include 'partials/champ.html' with field=form.email %}
+        {% include 'partials/champ.html' with field=form.telephone %}
+
+        <div class="ligne-2">
+            {% include 'partials/champ.html' with field=form.password1 %}
+            {% include 'partials/champ.html' with field=form.password2 %}
+        </div>
+
+        <button type="submit" class="btn btn-a btn-plein">Créer mon compte</button>
+    </form>
+
+    <p class="pied-carte">Vous avez déjà un compte ? <a href="{% url 'login' %}">Se connecter</a></p>
+</div>
+{% endblock %}
