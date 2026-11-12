@@ -10,8 +10,7 @@
         <span class="volet-lettre">A</span>
         <h2>Je démarre le constat</h2>
         <p>Vous créez le constat et recevez un code à donner à l'autre conducteur.</p>
-        {# L'URL sera remplacée à l'étape 4 #}
-        <a class="btn btn-a" href="{% if user.is_authenticated %}#{% else %}{% url 'login' %}{% endif %}">Créer un constat</a>
+        <a class="btn btn-a" href="{% if user.is_authenticated %}{% url 'constat_creer' %}{% else %}{% url 'login' %}{% endif %}">Créer un constat</a>
     </article>
 
     <article class="volet volet-b">
@@ -19,8 +18,7 @@
         <h2>Je rejoins un constat</h2>
         <p>L'autre conducteur a déjà commencé ? Saisissez son code.</p>
         {# L'action sera remplacée à l'étape 5 #}
-        <form class="rejoindre" method="get" action="{% if user.is_authenticated %}#{% else %}{% url 'login' %}{% endif %}">
-            <input type="text" name="code" placeholder="Code du constat" aria-label="Code du constat" maxlength="12" required>
+        <form class="rejoindre" method="get" action="{% url 'constat_rejoindre' %}">            <input type="text" name="code" placeholder="Code du constat" aria-label="Code du constat" maxlength="12" required>
             <button type="submit" class="btn btn-b">Rejoindre</button>
         </form>
     </article>

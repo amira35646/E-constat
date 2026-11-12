@@ -134,8 +134,28 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'login'
 
-#MAILERS = {
-#   'default': {
-#     'BACKEND': 'django.core.mail.backends.console.EmailBackend',
-# },
-#}
+# ---------- E-mails ----------
+# Identifiants Gmail lus dans config/secrets_locaux.py (fichier ignoré par Git)
+try:
+    from .secrets_locaux import EMAIL_USER, EMAIL_PASSWORD
+except ImportError:
+    EMAIL_USER = EMAIL_PASSWORD = ''
+
+if EMAIL_USER and EMAIL_PASSWORD:
+    MAILERS = {
+        'default': {
+            'BACKEND': 'django.core.mail.backends.smtp.EmailBackend',
+            'OPTIONS': {
+                'host': 'smtp.gmail.com',
+                'port': 587,
+                'username': EMAIL_USER,
+                'password': EMAIL_PASSWORD,
+                'use_tls': True,
+            },
+        },
+    }
+    DEFAULT_FROM_EMAIL = EMAIL_USER
+else:
+    # Sans identifiants : les e-mails s'affichent dans le terminal de runserver
+    MAILERS = {'default': {'BACKEND': 'django.core.mail.backends.console.EmailBackend'}}
+

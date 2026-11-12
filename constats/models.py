@@ -34,6 +34,9 @@ class Constat(models.Model):
     createur = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name='constats_crees'
     )
+    email_b = models.EmailField("e-mail du conducteur B", blank=True)
+    nb_invitations = models.PositiveSmallIntegerField(default=0)
+    derniere_invitation = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -157,4 +160,11 @@ class AnalyseIA(models.Model):
     @property
     def est_suspecte(self):
         return self.verdict == self.Verdict.SUSPECTE
-    
+    class Verdict(models.TextChoices):
+        EN_ATTENTE = 'en_attente', 'En attente'
+        AUTHENTIQUE = 'authentique', 'Authentique'
+        INCERTAIN = 'incertain', 'À vérifier manuellement'
+        SUSPECTE = 'suspecte', 'Suspecte'
+        NON_VOITURE = 'non_voiture', 'Ne montre pas une voiture'
+        ERREUR = 'erreur', "Erreur d'analyse" 
+        

@@ -61,7 +61,6 @@ a  { color: var(--bleu-a); }
   align-items: center;
   gap: 8px;
 }
-/* Petit repère A/B : deux carrés bleu et ambre */
 .logo-marque { display: inline-flex; }
 .logo-marque i { width: 14px; height: 22px; display: block; }
 .logo-marque i:first-child { background: var(--bleu-a); border-radius: 4px 0 0 4px; }
@@ -70,12 +69,14 @@ a  { color: var(--bleu-a); }
 .nav { display: flex; align-items: center; gap: 18px; }
 .nav a { color: var(--texte); text-decoration: none; font-weight: 600; }
 .nav a:hover { color: var(--bleu-a); }
+.nav a.btn-a, .nav a.btn-a:hover { color: #fff; }
 .nav .utilisateur { color: var(--texte-doux); }
 .nav form { margin: 0; }
 
 /* ---------- Mise en page ---------- */
 .conteneur { max-width: 1040px; margin: 0 auto; padding: 40px 20px 64px; }
 .conteneur-etroit { max-width: 580px; }
+.conteneur-moyen { max-width: 760px; }
 
 /* ---------- Boutons ---------- */
 .btn {
@@ -99,6 +100,8 @@ a  { color: var(--bleu-a); }
 }
 .btn-lien:hover { color: var(--danger); }
 .btn-plein { width: 100%; }
+.btn-annuler { background: transparent; border-color: var(--ligne); color: var(--texte); }
+.btn-annuler:hover { background: #e9ecef; }
 
 /* ---------- Accueil ---------- */
 .hero { padding: 24px 0 36px; }
@@ -120,7 +123,7 @@ a  { color: var(--bleu-a); }
   position: relative;
   overflow: hidden;
 }
-.volet::before {            /* bande de couleur à gauche */
+.volet::before {
   content: "";
   position: absolute; inset: 0 auto 0 0;
   width: 10px;
@@ -146,6 +149,9 @@ a  { color: var(--bleu-a); }
   border-radius: var(--rayon);
   padding: 32px;
 }
+.carte .intro { color: var(--texte-doux); margin-bottom: 24px; }
+.carte button[type="submit"] { margin-top: 8px; font-size: 1.05rem; }
+
 .field { margin-bottom: 18px; }
 .field label { display: block; font-weight: 700; margin-bottom: 6px; }
 .field input, .field select, .field textarea, .rejoindre input {
@@ -161,8 +167,18 @@ a  { color: var(--bleu-a); }
   border-color: var(--bleu-a);
   outline: none;
 }
+.field.a-erreur input,
+.field.a-erreur select,
+.field.a-erreur textarea { border-color: var(--danger); }
 .field small { display: block; color: var(--texte-doux); font-size: .9rem; margin-top: 4px; }
 .field small ul { margin: 4px 0 0; padding-left: 18px; }
+input::placeholder { color: #9aa3ad; }
+
+.ligne-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 16px;
+}
 .erreur { color: var(--danger); font-weight: 700; font-size: .95rem; margin: 6px 0 0; }
 .pied-carte { margin: 20px 0 0; color: var(--texte-doux); }
 
@@ -177,30 +193,158 @@ a  { color: var(--bleu-a); }
 .messages li.error   { border-color: var(--danger); background: #fbe9e7; }
 .messages li.success { border-color: var(--ok); background: #e5f4ec; }
 
+/* ---------- Constats ---------- */
+.entete-role {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 28px;
+  padding-left: 20px;
+  border-left: 10px solid var(--bleu-a);
+}
+.entete-role h1 { font-size: 2rem; margin-bottom: .2em; }
+.entete-role p { color: var(--texte-doux); margin: 0; }
+.entete-lettre {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 4rem; font-weight: 800; line-height: 1; color: var(--bleu-a);
+}
+
+.bloc { margin-bottom: 20px; }
+.bloc h2 { margin-bottom: 1em; }
+
+.actions-form { display: flex; justify-content: flex-end; gap: 12px; margin-top: 8px; }
+
+.entete-detail {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 16px; flex-wrap: wrap; margin-bottom: 24px;
+}
+.entete-detail h1 { font-size: 2rem; margin-bottom: .2em; }
+.entete-detail p { color: var(--texte-doux); margin: 0; }
+
+/* Code de partage */
+.code-partage {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 20px; flex-wrap: wrap;
+  background: #fff8e6;
+  border: 2px solid var(--ambre-b);
+  border-radius: var(--rayon);
+  padding: 24px 28px;
+  margin-bottom: 24px;
+}
+.code-partage h2 { margin-bottom: .2em; }
+.code-partage p { margin: 0; color: var(--texte-doux); }
+.code-zone { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.code {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 2.2rem; font-weight: 800; letter-spacing: .18em;
+  background: #fff; padding: 6px 16px; border-radius: 8px; border: 1px solid var(--ligne);
+  user-select: all;
+}
+
+/* Cartes partie A / B */
+.partie { border-left: 10px solid var(--ligne); }
+.partie-a { border-left-color: var(--bleu-a); }
+.partie-b { border-left-color: var(--ambre-b); }
+.partie h2 { display: flex; align-items: center; gap: 12px; }
+
+.lettre-role {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border-radius: 8px;
+  font-weight: 800; color: #fff; background: var(--bleu-a);
+}
+.partie-b .lettre-role, .lettre-b { background: var(--ambre-b); color: #1c2733; }
+
+.infos { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 24px; margin: 0; }
+.infos div { min-width: 0; }
+.infos .large { grid-column: 1 / -1; }
+.infos dt { font-size: .9rem; color: var(--texte-doux); }
+.infos dd { margin: 0; font-weight: 700; overflow-wrap: anywhere; }
+.validation { margin: 18px 0 0; }
+.vide { color: var(--texte-doux); margin: 0; }
+
+/* ---------- Pastilles ---------- */
+.pastille {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: .88rem;
+  font-weight: 700;
+}
+.pastille-ok      { background: #e5f4ec; color: var(--ok); }
+.pastille-off     { background: #fbe9e7; color: var(--danger); }
+.pastille-attente { background: #fff3d6; color: #8a5b00; }
+.role-admin       { background: #ede7f6; color: #4a2c8a; }
+.role-conducteur  { background: #e8f0fb; color: var(--bleu-a-fonce); }
+
+.statut-brouillon { background: #eceff1; color: #455a64; }
+.statut-attente_b { background: #fff3d6; color: #8a5b00; }
+.statut-en_cours  { background: #e8f0fb; color: var(--bleu-a-fonce); }
+.statut-finalise  { background: #e5f4ec; color: var(--ok); }
+
+/* ---------- Tableaux ---------- */
+.tableau-conteneur {
+  overflow-x: auto;
+  background: var(--surface);
+  border: 1px solid var(--ligne);
+  border-radius: var(--rayon);
+}
+.tableau { width: 100%; border-collapse: collapse; font-size: .98rem; }
+.tableau th, .tableau td {
+  padding: 14px 16px;
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--ligne);
+}
+.tableau th { background: #f7f8fa; font-weight: 700; white-space: nowrap; }
+.tableau tbody tr:last-child td { border-bottom: 0; }
+.tableau tbody tr:hover { background: #fafbfc; }
+.vide-tableau { text-align: center !important; color: var(--texte-doux); padding: 32px 16px !important; }
+
+/* ---------- Page Utilisateurs ---------- */
+.recherche {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 20px;
+  max-width: 640px;
+}
+.recherche input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 14px;
+  font: inherit;
+  color: var(--texte);
+  background: #fff;
+  border: 2px solid var(--ligne);
+  border-radius: 8px;
+}
+.recherche input:focus { border-color: var(--bleu-a); outline: none; }
+.recherche .effacer { color: var(--texte-doux); white-space: nowrap; }
+
+.user-cell { display: flex; align-items: center; gap: 12px; }
+.avatar {
+  flex: none;
+  width: 40px; height: 40px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: var(--bleu-a);
+  color: #fff;
+  font-weight: 800;
+  font-size: .95rem;
+}
+.sous-texte { display: block; color: var(--texte-doux); font-size: .88rem; }
+.tableau-users td strong { display: block; }
+
 /* ---------- Mobile ---------- */
 @media (max-width: 720px) {
   .duo { grid-template-columns: 1fr; }
   .conteneur { padding-top: 24px; }
   .carte { padding: 22px; }
+  .masquer-mobile { display: none; }
+  .recherche { flex-wrap: wrap; }
 }
-
-/* ---------- Formulaire d'inscription ---------- */
-.carte .intro { color: var(--texte-doux); margin-bottom: 24px; }
-
-.ligne-2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0 16px;
-}
-
-.field.a-erreur input,
-.field.a-erreur select,
-.field.a-erreur textarea { border-color: var(--danger); }
-
-input::placeholder { color: #9aa3ad; }
-
-.carte button[type="submit"] { margin-top: 8px; font-size: 1.05rem; }
-
 @media (max-width: 560px) {
   .ligne-2 { grid-template-columns: 1fr; }
+  .infos { grid-template-columns: 1fr; }
+  .entete-lettre { font-size: 3rem; }
 }

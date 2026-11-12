@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block title %}Utilisateurs · e-Constat{% endblock %}
+{% block content %}
+
+<div class="entete-detail">
+    <div>
+        <h1>Utilisateurs</h1>
+        <p>
+            {{ utilisateurs|length }} compte{{ utilisateurs|length|pluralize }}
+            {% if q %}correspondant à « {{ q }} »{% else %}au total{% endif %}
+        </p>
+    </div>
+</div>
+
+<form method="get" class="recherche">
+    <input type="search" name="q" value="{{ q }}" placeholder="Rechercher par nom, e-mail ou identifiant" aria-label="Rechercher un utilisateur">
+    <button type="submit" class="btn btn-a">Rechercher</button>
+    {% if q %}<a class="effacer" href="{% url 'liste_utilisateurs' %}">Effacer</a>{% endif %}
+</form>
+
+<div class="tableau-conteneur">
+    <table class="tableau tableau-users">
+        <thead>
+            <tr>
+                <th>Utilisateur</th>
+                <th>Contact</th>
+                <th>Rôle</th>
+                <th class="masquer-mobile">Inscrit le</th>
+                <th>Statut</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for u in utilisateurs %}
+            <tr>
+                <td>
+                    <div class="user-cell">
+                        <span class="avatar">{% if u.first_name %}{{ u.first_name|slice:":1"|upper }}{{ u.last_name|slice:":1"|upper }}{% else %}{{ u.username|slice:":1"|upper }}{% endif %}</span>
+                        <div>
+                            <strong>{{ u.get_full_name|default:u.username }}</strong>
+                            <span class="sous-texte">@{{ u.username }}</span>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    {{ u.email|default:"-" }}
+                    <span class="sous-texte">{{ u.telephone|default:"Pas de téléphone" }}</span>
+                </td>
+                <td>
+                    {% if u.role == 'admin' or u.is_superuser %}
+                        <span class="pastille role-admin">Administrateur</span>
+                    {% else %}
+                        <span class="pastille role-conducteur">Conducteur</span>
+                    {% endif %}
+                </td>
+                <td class="masquer-mobile">{{ u.date_joined|date:"d/m/Y" }}</td>
+                <td>
+                    {% if u.is_active %}<span class="pastille pastille-ok">Actif</span>
+                    {% else %}<span class="pastille pastille-off">Désactivé</span>{% endif %}
+                </td>
+                <td><a href="{% url 'admin:accounts_user_change' u.pk %}">Modifier</a></td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" class="vide-tableau">Aucun utilisateur ne correspond à cette recherche.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

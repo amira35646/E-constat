@@ -3,3 +3,23 @@ __pycache__/
 db.sqlite3
 media/
 .env
+config/secrets_locaux.py
+# Environnement virtuel
+venv/
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Django
+db.sqlite3
+.env
+staticfiles/
+
+# IDE
+.vscode/
+.idea/
+
+# Système
+.DS_Store

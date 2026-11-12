@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}Constat {{ constat.code }} · e-Constat{% endblock %}
+{% block conteneur_classe %}conteneur-moyen{% endblock %}
+{% block content %}
+
+<div class="entete-detail">
+    <div>
+        <h1>Constat {{ constat.code }}</h1>
+        <p>{{ constat.date_accident|date:"d/m/Y à H:i" }} · {{ constat.lieu }}</p>
+    </div>
+    <span class="pastille statut-{{ constat.statut }}">{{ constat.get_statut_display }}</span>
+</div>
+
+{% if constat.statut == 'attente_b' and ma_partie.role == 'A' %}
+<section class="code-partage">
+    <div>
+        <h2>Code à transmettre au conducteur B</h2>
+        <p>Il le saisit sur la page d'accueil, dans « Je rejoins un constat ».</p>
+    </div>
+    <div class="code-zone">
+        <span class="code" id="code-valeur">{{ constat.code }}</span>
+        <button type="button" class="btn btn-b" id="copier">Copier le code</button>
+    </div>
+</section>
+{% endif %}
+
+{% include 'constats/_partie.html' with partie=partie_a role='A' %}
+{% include 'constats/_partie.html' with partie=partie_b role='B' %}
+
+<section class="carte bloc">
+    <h2>Photos des dommages</h2>
+    <p class="vide">L'ajout de photos et leur vérification automatique seront disponibles à l'étape 6.</p>
+</section>
+
+<p><a href="{% url 'mes_constats' %}">Retour à mes constats</a></p>
+
+<script>
+document.getElementById('copier')?.addEventListener('click', async function () {
+    const code = document.getElementById('code-valeur').textContent.trim();
+    try {
+        await navigator.clipboard.writeText(code);
+        this.textContent = 'Code copié';
+    } catch (e) {
+        this.textContent = 'Copie impossible : sélectionnez le code';
+    }
+});
+</script>
+{% endblock %}

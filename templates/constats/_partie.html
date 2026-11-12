@@ -1,0 +1,29 @@
+<section class="carte bloc partie partie-{{ role|lower }}">
+    <h2><span class="lettre-role">{{ role }}</span> Conducteur {{ role }}</h2>
+
+    {% if partie %}
+    <dl class="infos">
+        <div><dt>Nom</dt><dd>{{ partie.prenom }} {{ partie.nom }}</dd></div>
+        <div><dt>Adresse</dt><dd>{{ partie.adresse }}</dd></div>
+        <div><dt>Téléphone</dt><dd>{{ partie.telephone|default:"-" }}</dd></div>
+        <div><dt>Permis</dt><dd>{{ partie.numero_permis }}</dd></div>
+        {% if partie.vehicule %}
+        <div><dt>Véhicule</dt><dd>{{ partie.vehicule.marque }} {{ partie.vehicule.modele }}</dd></div>
+        <div><dt>Immatriculation</dt><dd>{{ partie.vehicule.immatriculation }}</dd></div>
+        <div><dt>Assurance</dt><dd>{{ partie.vehicule.compagnie_assurance }} ({{ partie.vehicule.numero_police }})</dd></div>
+        {% if partie.vehicule.degats %}
+        <div class="large"><dt>Dégâts</dt><dd>{{ partie.vehicule.degats }}</dd></div>
+        {% endif %}
+        {% endif %}
+        {% if partie.circonstances %}
+        <div class="large"><dt>Circonstances</dt><dd>{{ partie.circonstances|linebreaksbr }}</dd></div>
+        {% endif %}
+    </dl>
+    <p class="validation">
+        {% if partie.valide %}<span class="pastille pastille-ok">Partie validée</span>
+        {% else %}<span class="pastille pastille-attente">Pas encore validée</span>{% endif %}
+    </p>
+    {% else %}
+    <p class="vide">En attente : l'autre conducteur n'a pas encore rejoint le constat.</p>
+    {% endif %}
+</section>

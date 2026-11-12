@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Mes constats · e-Constat{% endblock %}
+{% block content %}
+<div class="entete-detail">
+    <h1>Mes constats</h1>
+    <a class="btn btn-a" href="{% url 'constat_creer' %}">Nouveau constat</a>
+</div>
+
+<div class="tableau-conteneur">
+    <table class="tableau">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Mon rôle</th>
+                <th>Date de l'accident</th>
+                <th>Lieu</th>
+                <th>Statut</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in parties %}
+            <tr>
+                <td><strong>{{ p.constat.code }}</strong></td>
+                <td><span class="lettre-role lettre-{{ p.role|lower }}">{{ p.role }}</span></td>
+                <td>{{ p.constat.date_accident|date:"d/m/Y H:i" }}</td>
+                <td>{{ p.constat.lieu }}</td>
+                <td><span class="pastille statut-{{ p.constat.statut }}">{{ p.constat.get_statut_display }}</span></td>
+                <td><a href="{% url 'constat_detail' code=p.constat.code %}">Ouvrir</a></td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6">Vous n'avez pas encore de constat. Créez-en un pour commencer.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

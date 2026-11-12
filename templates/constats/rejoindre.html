@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}Rejoindre le constat · e-Constat{% endblock %}
+{% block conteneur_classe %}conteneur-moyen{% endblock %}
+{% block content %}
+
+<div class="entete-role entete-b">
+    <span class="entete-lettre">B</span>
+    <div>
+        <h1>Rejoindre le constat</h1>
+        <p>Vous êtes le conducteur B. Complétez votre partie : vos informations, votre véhicule, vos photos et votre version des faits.</p>
+    </div>
+</div>
+
+<section class="recap">
+    <div><span>Code</span><strong>{{ constat.code }}</strong></div>
+    <div><span>Date de l'accident</span><strong>{{ constat.date_accident|date:"d/m/Y à H:i" }}</strong></div>
+    <div><span>Lieu</span><strong>{{ constat.lieu }}</strong></div>
+</section>
+
+<form method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+
+    <section class="carte bloc">
+        <h2>Vos informations</h2>
+        <div class="ligne-2">
+            {% include 'partials/champ.html' with field=partie_form.prenom %}
+            {% include 'partials/champ.html' with field=partie_form.nom %}
+        </div>
+        {% include 'partials/champ.html' with field=partie_form.adresse %}
+        <div class="ligne-2">
+            {% include 'partials/champ.html' with field=partie_form.telephone %}
+            {% include 'partials/champ.html' with field=partie_form.numero_permis %}
+        </div>
+    </section>
+
+    <section class="carte bloc">
+        <h2>Votre véhicule</h2>
+        <div class="ligne-2">
+            {% include 'partials/champ.html' with field=vehicule_form.marque %}
+            {% include 'partials/champ.html' with field=vehicule_form.modele %}
+        </div>
+        {% include 'partials/champ.html' with field=vehicule_form.immatriculation %}
+        <div class="ligne-2">
+            {% include 'partials/champ.html' with field=vehicule_form.compagnie_assurance %}
+            {% include 'partials/champ.html' with field=vehicule_form.numero_police %}
+        </div>
+        {% include 'partials/champ.html' with field=vehicule_form.degats %}
+    </section>
+
+    <section class="carte bloc">
+        <h2>Photos des dommages</h2>
+        {% include 'partials/champ.html' with field=photos_form.photos %}
+    </section>
+
+    <section class="carte bloc">
+        <h2>Votre version des circonstances</h2>
+        {% include 'partials/champ.html' with field=partie_form.circonstances %}
+    </section>
+
+    <div class="actions-form">
+        <a class="btn btn-annuler" href="{% url 'home' %}">Annuler</a>
+        <button type="submit" class="btn btn-b">Rejoindre le constat</button>
+    </div>
+</form>
+{% endblock %}
